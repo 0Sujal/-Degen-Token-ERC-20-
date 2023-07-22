@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract GameToken {
+contract DegenGamingToken {
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
 
     event Mint(address indexed recipient, uint256 amount);
     event Transfer(address indexed from, address indexed to, uint256 amount);
-    event Redeem(address indexed recipient, uint256 amount);
+    event Redeem(address indexed recipient, uint256 amount, string prizeSelection);
     event Burn(address indexed owner, uint256 amount);
 
     constructor(uint256 initialSupply) {
@@ -31,11 +31,11 @@ contract GameToken {
         emit Transfer(msg.sender, recipient, amount);
     }
 
-    function redeem(uint256 amount) public {
+    function redeem(uint256 amount, string memory prizeSelection) public {
         require(_balances[msg.sender] >= amount, "Not enough tokens to redeem");
         _balances[msg.sender] -= amount;
         _totalSupply -= amount;
-        emit Redeem(msg.sender, amount);
+        emit Redeem(msg.sender, amount, prizeSelection);
     }
 
     function burn(uint256 amount) public {
